@@ -1,19 +1,22 @@
 <template>
-  <div class="todo">
+  <div
+    class="todo"
+  >
     {{ todo.title }}
-    <i class="far fa-trash-alt" @click='deleteTodo(todo.id)' />
+    <i class="far fa-trash-alt" @click="deleteTodo(todo.id)" />
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions } from "vuex";
 
 export default {
   name: "Todo",
   props: ["todo"],
   methods: {
-    ...mapActions(['deleteTodo'])
-  }
+    ...mapActions(["deleteTodo"]),
+    
+  },
 };
 </script>
 
@@ -34,4 +37,5 @@ i {
   color: #fff;
   cursor: pointer;
 }
+
 </style>
