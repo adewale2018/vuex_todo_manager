@@ -1,5 +1,5 @@
 import axios from "axios";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 const state = {
   todos: [],
@@ -27,6 +27,17 @@ const actions = {
   deleteTodo: async function({ commit }, todoId) {
     await axios.delete(`https://jsonplaceholder.typicode.com/todos/${todoId}`);
     commit("REMOVE_TODO", todoId);
+  },
+  filterTodos: async function({ commit }, e) {
+    //get the selected number
+    // const limit  = e.target.options[e.target.options.selectedIndex].text;
+    const limit = parseInt(
+      e.target.options[e.target.options.selectedIndex].innerText
+    );
+    let response = await axios.get(
+      `https://jsonplaceholder.typicode.com/todos?_limit=${limit}`
+    );
+    commit("SET_TODOS", response.data);
   },
 };
 
