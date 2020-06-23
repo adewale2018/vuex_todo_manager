@@ -3,17 +3,15 @@
     <h3>Todos</h3>
     <div class="legend">
       <span>Double click to mark as completed</span>
-      <span> <span class="incomplete-box"></span> = Incomplete </span>
-      <span> <span class="complete-box"></span> = Complete </span>
+      <span>
+        <span class="incomplete-box"></span> = Incomplete
+      </span>
+      <span>
+        <span class="complete-box"></span> = Complete
+      </span>
     </div>
     <div class="todos">
-      <Todo
-        v-for="todo in allTodos"
-        :key="todo.id"
-        :todo="todo"
-        :class="{ 'is-complete': todo.completed }"
-        @dblclick="onDblClick(todo)"
-      />
+      <Todo v-for="todo in allTodos" :key="todo.id" :todo="todo" />
     </div>
   </div>
 </template>
@@ -26,20 +24,12 @@ export default {
   name: "Todos",
   components: { Todo },
   methods: {
-    ...mapActions(["fetchTodos","updateTodo"]),
-    onDblClick: function(todo) {
-      const updTodo = {
-        id: todo.id,
-        title: todo.title,
-        completed: !todo.completed,
-      };
-      this.updateTodo(updTodo);
-    },
+    ...mapActions(["fetchTodos"])
   },
   computed: mapGetters(["allTodos"]),
   created: function() {
     this.fetchTodos();
-  },
+  }
 };
 </script>
 
@@ -66,10 +56,7 @@ export default {
   height: 10px;
   background: #41b883;
 }
-.is-complete {
-  background: #35495e;
-  color: #fff;
-}
+
 @media (max-width: 500px) {
   .todos {
     grid-template-columns: 1fr;

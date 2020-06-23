@@ -1,5 +1,5 @@
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
 
 const state = {
   todos: [],
@@ -19,7 +19,6 @@ const actions = {
   addTodo: async function({ commit }, title) {
     let res = await axios.post("https://jsonplaceholder.typicode.com/todos", {
       title,
-      id: uuidv4(),
       completed: false,
     });
     commit("ADD_TODO", res.data);
@@ -41,10 +40,12 @@ const actions = {
     commit("SET_TODOS", response.data);
   },
   updateTodo: async function({ commit }, updateTodo) {
-    let res = await axios.patch(
-      `https://jsonplaceholder.typicode.com/todos/8`,
-      updateTodo
-    );
+    let res = await axios.put(
+      `https://jsonplaceholder.typicode.com/todos/${updateTodo.id}`, {
+        id: updateTodo.id,
+        title: updateTodo.title,
+        completed: !updateTodo.completed,
+      });
     commit("UPDATE_TODO", res.data);
     console.log("FROM UPDATE REQUEST", res.data);
   },
@@ -63,7 +64,7 @@ const mutations = {
   UPDATE_TODO: function(state, updateTodo) {
     const index = state.todos.findIndex((todo) => todo.id === updateTodo.id);
     if (index !== -1) {
-      return (state.todos = state.todos.splice(index, 1, updateTodo));
+      return state.todos.splice(index, 1, updateTodo);
     }
   },
 };

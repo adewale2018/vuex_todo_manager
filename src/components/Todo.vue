@@ -1,8 +1,6 @@
 <template>
-  <div
-    class="todo"
-  >
-    {{ todo.title }}
+  <div class="todo" @dblclick="updateTodo(todo)" :class="{ 'is-complete': todo.completed }">
+    <span>{{ todo.title }}</span>
     <i class="far fa-trash-alt" @click="deleteTodo(todo.id)" />
   </div>
 </template>
@@ -14,9 +12,8 @@ export default {
   name: "Todo",
   props: ["todo"],
   methods: {
-    ...mapActions(["deleteTodo"]),
-    
-  },
+    ...mapActions(["deleteTodo", "updateTodo"])
+  }
 };
 </script>
 
@@ -37,5 +34,8 @@ i {
   color: #fff;
   cursor: pointer;
 }
-
+.is-complete {
+  background: #35495e;
+  color: #fff;
+}
 </style>
