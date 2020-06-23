@@ -1,5 +1,5 @@
 <template>
-  <div class="todo" @dblclick="updateTodo(todo)" :class="{ 'is-complete': todo.completed }">
+  <div class="todo" @dblclick="onDblClick(todo)" :class="{ 'is-complete': todo.completed }">
     <span>{{ todo.title }}</span>
     <i class="far fa-trash-alt" @click="deleteTodo(todo.id)" />
   </div>
@@ -12,7 +12,15 @@ export default {
   name: "Todo",
   props: ["todo"],
   methods: {
-    ...mapActions(["deleteTodo", "updateTodo"])
+    ...mapActions(["deleteTodo", "updateTodo"]),
+    onDblClick(todo) {
+      const updTodo = {
+        id: todo.id,
+        title: todo.title,
+        completed: !todo.completed
+      };
+      this.updateTodo(updTodo);
+    }
   }
 };
 </script>
